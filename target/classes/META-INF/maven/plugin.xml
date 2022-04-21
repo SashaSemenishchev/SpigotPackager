@@ -4,7 +4,7 @@
 
 <plugin>
   <name>spigot-packager Package Plugin</name>
-  <description></description>
+  <description>Simple plugin that helps to copy spigot plugin to your server plugins folder when you package project</description>
   <groupId>me.mrfunny</groupId>
   <artifactId>spigot-packager</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -20,7 +20,7 @@
       <aggregator>false</aggregator>
       <requiresOnline>false</requiresOnline>
       <inheritedByDefault>true</inheritedByDefault>
-      <phase>compile</phase>
+      <phase>package</phase>
       <implementation>me.mrfunny.PackagePluginMojo</implementation>
       <language>java</language>
       <instantiationStrategy>per-lookup</instantiationStrategy>
@@ -28,9 +28,37 @@
       <threadSafe>false</threadSafe>
       <parameters>
         <parameter>
+          <name>executeAfter</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>host</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>password</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
           <name>pluginsFolder</name>
           <type>java.lang.String</type>
           <required>true</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>port</name>
+          <type>java.lang.String</type>
+          <required>false</required>
           <editable>true</editable>
           <description></description>
         </parameter>
@@ -41,10 +69,22 @@
           <editable>false</editable>
           <description></description>
         </parameter>
+        <parameter>
+          <name>username</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
       </parameters>
       <configuration>
+        <executeAfter implementation="java.lang.String">${executeAfter}</executeAfter>
+        <host implementation="java.lang.String">${host}</host>
+        <password implementation="java.lang.String">${password}</password>
         <pluginsFolder implementation="java.lang.String">${pluginsFolder}</pluginsFolder>
+        <port implementation="java.lang.String">${port}</port>
         <project implementation="org.apache.maven.project.MavenProject" default-value="${project}"/>
+        <username implementation="java.lang.String">${username}</username>
       </configuration>
     </mojo>
   </mojos>
@@ -192,6 +232,42 @@
       <artifactId>classworlds</artifactId>
       <type>jar</type>
       <version>1.1-alpha-2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hierynomus</groupId>
+      <artifactId>sshj</artifactId>
+      <type>jar</type>
+      <version>0.27.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <type>jar</type>
+      <version>1.7.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk15on</artifactId>
+      <type>jar</type>
+      <version>1.60</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcpkix-jdk15on</artifactId>
+      <type>jar</type>
+      <version>1.60</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jcraft</groupId>
+      <artifactId>jzlib</artifactId>
+      <type>jar</type>
+      <version>1.1.3</version>
+    </dependency>
+    <dependency>
+      <groupId>net.i2p.crypto</groupId>
+      <artifactId>eddsa</artifactId>
+      <type>jar</type>
+      <version>0.2.0</version>
     </dependency>
   </dependencies>
 </plugin>
